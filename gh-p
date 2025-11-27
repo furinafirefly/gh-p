@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+# coding: utf-8
+
+import log as l
+import utils as u
+import config as c
+import help
+
+
+def show_help(args: u.Args):
+    l.verbose(f'Show help for {args.flag_help}')
+    if args.flag_help == 'checkout':
+        # Checkout
+        print(help.checkout)
+    elif args.flag_help == 'push':
+        # Push
+        print(help.push)
+    else:
+        # General
+        print(help.general)
+
+
+def main() -> None | int:
+    p = u.parse_args()
+    l.is_verbose = p.flag_verbose
+
+    # * Show Help
+    if p.flag_help:
+        show_help(p)
+        return
+
+    # * Passthrough -> original gh pr commands
+    if p.cmd == '':
+        l.verbose(f'Passthrough: gh pr {" ".join(p.all_others)}')
+        u.run(['gh', 'pr'] + p.all_others, capture=False)
+        return
+
+    # * Checkout
+    if p.cmd == 'checkout':
+        if not p.pr_number:
+            l.error(f'Please provide PR # number!')
+            return 1
+        branch = f'{c.pr_branch_prefix}{p.pr_number}'
+        l.info(f'Checking out PR #{p.pr_number} -> Local {branch}')
+        u.run(f'gh pr checkout {p.pr_number} --branch {branch} {' '.join(p.all_others[2:])}')
+        l.success('Checkout done')
+        return
+
+    # * Push
+    if p.cmd == 'push':
+        if not p.pr_number:
+            l.error(f'Please provide PR # number!')
+            return 1
+
+        # get pr info
+        info = u.get_pr(p.pr_number)
+        l.verbose(f'PR info: branch {info.branch}, owner {info.owner}, repo: {info.repo}')
+        if (not info.owner) or (not info.repo):
+            l.error(f'Cannot found owner and(or) repo information!')
+            return 2
+
+        # config remote
+        remote_url = c.remote_url.format(
+            owner=info.owner,
+            repo=info.repo
+        )
+        if u.run(f'git remote get-url {c.temp_remote_name}', check_err=False) == remote_url:
+            l.verbose(f'Remote {c.temp_remote_name} already points to {remote_url}')
+        else:
+            l.verbose(f'Edit remote: {c.temp_remote_name} -> {remote_url}')
+            u.run(f'git remote remove {c.temp_remote_name}', check_err=False)
+            u.run(f'git remote add {c.temp_remote_name} {remote_url}')
+
+        # push
+        l.info(f'Pushing to {info.owner}/{info.repo}@{info.branch}...')
+        u.run(f'git push {c.temp_remote_name} HEAD:{info.branch} {' '.join(p.all_others[2:])}', capture=False)
+        l.success(f'Push done')
+
+
+if __name__ == '__main__':
+    u.sys.exit(main())

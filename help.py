@@ -15,11 +15,11 @@ general: str = f'''
 
 {c.BOLD}Commands{c.RESET}
   {c.GREEN}checkout (check|chk|co|c){c.RESET}    Checkout PR to local branch with formatted name
-  {c.GREEN}push (ps|p){c.RESET}                 Push changes to PR branch with auto remote setup
+  {c.GREEN}push (ps|p){c.RESET}                  Push changes to PR branch with auto remote setup
   {c.YELLOW}[any other gh pr command]{c.RESET}    Pass through to original gh pr
 
 {c.BOLD}Examles{c.RESET}
-  {c.WHITE}gh p checkout 123{c.RESET}           # Checkout PR #123 to local branch
+  {c.WHITE}gh p checkout 123{c.RESET}          # Checkout PR #123 to local branch
   {c.WHITE}gh p push 456{c.RESET}              # Push to PR #456
   {c.WHITE}gh p push{c.RESET}                  # Push to current PR (auto-detected)
   {c.WHITE}gh p list{c.RESET}                  # Pass through to 'gh pr list'
@@ -34,7 +34,8 @@ general: str = f'''
   • PR number extraction patterns  
   • Remote URL format (HTTPS/SSH)
   • Command aliases
-{c.BOLE}The Open-source repository address for this project{c.RESET}
+
+{c.BOLD}The Open-source repository address for this project{c.RESET}
   {c.WHITE}https://github.com/wyf9/gh-p{c.RESET}
 '''[1:-1]
 
@@ -53,7 +54,7 @@ checkout: str = f'''
 
 {c.BOLD}EXAMPLES{c.RESET}
   {c.WHITE}gh p checkout 123{c.RESET}           # Checkout PR #123
-  {c.WHITE}gh p co 456{c.RESET}                # Using alias
+  {c.WHITE}gh p co 456{c.RESET}                 # Using alias
   {c.WHITE}gh p checkout 789 --verbose{c.RESET} # With verbose output
 
 {c.BOLD}BEHAVIOR{c.RESET}
@@ -77,7 +78,7 @@ push: str = f'''
   {c.WHITE}gh p push [pr-number] [flags]{c.RESET}
 
 {c.BOLD}PARAMETERS{c.RESET}
-  {c.GREEN}pr-number{c.RESET}          GitHub Pull Request number (optional)
+  {c.GREEN}pr-number{c.RESET}         GitHub Pull Request number (optional)
                     If omitted, attempts auto-detection from:
                     • Current branch name patterns
                     • GitHub checkout references

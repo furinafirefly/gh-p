@@ -35,7 +35,9 @@ def run(cmd: str | list[str], check_err: bool = True, timeout: float | None = No
         exit(3)
 
     if check_err and result.returncode != 0:
-        l.e(f'Command {cmd} return isn\'t 0: {result.returncode}\n{result.stderr.strip()}')
+        l.e(f'Command {cmd} return isn\'t 0: {result.returncode}')
+        if capture:
+            print(result.stderr.strip())
         exit(result.returncode)
 
     return result.stdout.strip() if capture else ''

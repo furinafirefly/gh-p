@@ -6,7 +6,7 @@
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 [![GitHub CLI](https://img.shields.io/badge/GitHub%20CLI-required-orange.svg)](https://cli.github.com/)
 
-<b>简体中文</b> | <a href="../../README.md">English</a>
+<b>简体中文</b> | <a href="./README.md">English</a>
 
 </div>
 
@@ -45,13 +45,6 @@ gh p checkout 123
 ### Push 到 PR
 
 ```bash
-gh p 456
-# 自动配置远程仓库并推送更改
-```
-
-### 自动检测 PR
-
-```bash
 # 当在分支 'gh-pull-789' 上时
 gh p push
 # 自动检测 PR #789
@@ -75,7 +68,10 @@ gh p push -h       # push 命令帮助
 
 ## ⚙️ 配置
 
-编辑 config.py 来自定义行为：
+首先 Clone / Fork 本 Repo,
+
+并编辑 config.py 来自定义行为：
+
 ```python
 # 本地分支命名
 pr_branch_format = 'gh-pull-{number}'
@@ -100,6 +96,6 @@ aliases = {
 
 ## 📄 协议
 
-MIT License - 详见 LICENSE 文件。
+MIT License.
 
-Copyright © 2025 wyf9, All rights reserved.
+Copyright (c) 2025 wyf9, All rights reserved.

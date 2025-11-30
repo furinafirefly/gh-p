@@ -6,7 +6,7 @@
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 [![GitHub CLI](https://img.shields.io/badge/GitHub%20CLI-required-orange.svg)](https://cli.github.com/)
 
-<b>English</b> | <a href="/docs/lang/README_cn.md">简体中文</a>
+<b>English</b> | <a href="./README.cn.md">简体中文</a>
 
 </div>
 
@@ -45,13 +45,6 @@ gh p checkout 123
 ### Push to a PR
 
 ```bash
-gh p 456
-# Automatically configures remote and pushes changes
-```
-
-### Auto-detect PR
-
-```bash
 # When on branch 'gh-pull-789'
 gh p push
 # Automatically detects PR #789
@@ -75,7 +68,10 @@ gh p push -h       # Push command help
 
 ## ⚙️ Configuration
 
-Edit config.py to customize behavior:
+Clone / Fork this repo first,
+
+then edit config.py to customize behavior:
+
 ```python
 # Local branch naming
 pr_branch_format = 'gh-pull-{number}'
@@ -100,6 +96,6 @@ aliases = {
 
 ## 📄 License
 
-MIT License - see LICENSE file for details.
+MIT License.
 
-Copyright © 2025 wyf9, All rights reserved.
+Copyright (c) 2025 wyf9, All rights reserved.
